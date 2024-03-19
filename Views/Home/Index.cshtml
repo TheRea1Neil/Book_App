@@ -2,7 +2,50 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model IEnumerable<Book>
+
+<h1>This is A Book Store</h1>
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>ISBN</th>
+            <th>Classification</th>
+            <th>Category</th>
+            <th>Number of Pages</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Book b in Model)
+        {
+            <tr>
+                <td>@b.Title</td>
+                <td>@b.Author</td>
+                <td>@b.Publisher</td>
+                <td>@b.Isbn</td>
+                <td>@b.Classification</td>
+                <td>@b.Category</td>
+                <td>@b.PageCount</td>
+                <td>@b.Price.ToString("C")</td> <!-- Format as currency -->
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<!-- Pagination Controls -->
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+   
